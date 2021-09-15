@@ -33,7 +33,7 @@ import Actions from '../../Actions/Actions';
    
 
     handleChange(event){
-
+       console.log("hello for testing");
         var {user,isSubmited,error,isvalidUser,isInvaliduser}={...this.state};
         const currentState=user;
         const {name,value}=event.target;
