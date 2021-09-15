@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "username": "Ramashankar kumar",
+      "phone": "8227914199",
+      "email": "rmsyadav567@gmail.com",
+      "password": "123456",
+      "password2": "123456",
+      "id": 1
+    },
+    {
+      "username": "Ramashankar kumar",
+      "phone": "8839847229",
+      "email": "rmsyadav789@gmail.com",
+      "password": "123456",
+      "password2": "123456",
+      "id": 2
+    },
+    {
+      "username": "rmsyadav",
+      "phone": "8839847229",
+      "email": "rmsyadav678@gmail.com",
+      "password": "123456",
+      "password2": "123456",
+      "id": 3
+    }
+  ],
+  "Loggedin": []
+}
