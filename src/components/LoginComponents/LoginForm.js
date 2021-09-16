@@ -45,6 +45,7 @@ import Actions from '../../Actions/Actions';
     handleSubmit(event){
         event.preventDefault();
         var {user,isSubmited,error,isvalidUser}={...this.state};
+        console.log("hello");
         const currenterror=loginPageValidation(user);
         this.setState({user:this.state.user,isSubmited:false,error:currenterror,isvalidUser:false}); 
         if(Object.keys(currenterror).length===0)
