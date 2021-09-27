@@ -5,11 +5,11 @@ import {history} from '../LoginComponents/createhistory'
 
 const  ProtectedRouting=(props)=>{
     const Coronatrackerpag=props.component;
-    const email=useSelector(state => state.user.email)
+    const LoggedIn=useSelector(state => state.LoggedIn)
     
     return(
 
-         email?<Coronatrackerpag></Coronatrackerpag>:<LoginForm history={history}></LoginForm>
+         LoggedIn?<Coronatrackerpag></Coronatrackerpag>:<LoginForm history={history}></LoginForm>
     )
 
      
