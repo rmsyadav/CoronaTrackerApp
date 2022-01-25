@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {LOGGEDIN,LOGOUT,SETUSER} from '../Types/Constant'
     function ActionCreater(user){
     
@@ -18,13 +19,13 @@ import {LOGGEDIN,LOGOUT,SETUSER} from '../Types/Constant'
 function fetchAllRegisterUser() {
 
     return async (dispatch)=>{
-        await axios.get("http://localhost:3333/users").then((response)=>{
+        await axios.get("/v1/cta/featch/userDetails").then((response)=>{
             console.log(response.data);
             dispatch(setuser(response.data))
         })
     }
 }
-function setuser(allRegisteruser){
+export function setuser(allRegisteruser){
     return{
         type:SETUSER,
         allRegisteruser:allRegisteruser

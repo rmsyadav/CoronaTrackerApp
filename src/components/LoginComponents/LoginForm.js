@@ -5,6 +5,8 @@ import {NavLink} from 'react-router-dom';
 import loginPageValidation from './loginPageValidation';
 import {connect} from 'react-redux';
 import Actions from '../../Actions/Actions';
+import LoginAuthentication from '../Service/LoginAuthentication';
+import { colors } from '@material-ui/core';
 
 
 
@@ -15,7 +17,7 @@ import Actions from '../../Actions/Actions';
         this.isInvaliduser=false;
         this.state={
               user:{
-                    userid:'',
+                    emailId:'',
                     password:''
                     },
               isSubmited:false,
@@ -28,12 +30,16 @@ import Actions from '../../Actions/Actions';
             }
          this.handleChange=this.handleChange.bind(this);   
          this.handleSubmit=this.handleSubmit.bind(this);
-
+         this.redirectToCoronaTrackerPage=this.redirectToCoronaTrackerPage.bind(this);
        }
    
-
+    redirectToCoronaTrackerPage()
+    {
+      alert("You have been seccesfully LoggedIn!!") ; 
+      this.props.history.push('/coronatrackerpage');
+    }
     handleChange(event){
-       console.log("hello for te");
+      
         var {user,isSubmited,error,isvalidUser,isInvaliduser}={...this.state};
         const currentState=user;
         const {name,value}=event.target;
@@ -42,7 +48,7 @@ import Actions from '../../Actions/Actions';
     };
 
 
-    handleSubmit(event){
+handleSubmit(event){
         event.preventDefault();
         var {user,isSubmited,error,isvalidUser}={...this.state};
         const currenterror=loginPageValidation(user);
@@ -53,26 +59,29 @@ import Actions from '../../Actions/Actions';
               let valid=false;
               let localuser={}; 
 
-             this.props.allRegisteruser.map((obj)=>{
-                if(obj.email===this.state.user.userid && obj.password===this.state.user.password)
+             /*this.props.allRegisteruser.map((obj)=>{
+                if(obj.emailId===this.state.user.userid && obj.password===this.state.user.password)
                     {
                         valid=true;
                         localuser=obj;
+                        loginAuthentication(this.state.user.emailId,this.state.user.password);
                     }
                 })
-               if(valid)
+                */
+                LoginAuthentication(this.state.user.userid,this.state.user.password,this.props.Loggedin).then(()=>{
+                if(this.props.LoggedIn)
                 {
-                    this.props.Loggedin(localuser);
-                    alert("you have been seccefully Loggedin!"); 
-                    this.setState({user:localuser,isSubmited:isSubmited,error:currenterror,isvalidUser:true,isInvaliduser:false});
-                    this.props.history.push('/coronatrackerpage')
+                    
+                    this.setState({user:user,isSubmited:isSubmited,error:currenterror,isvalidUser:true,isInvaliduser:false});
+                    setTimeout(this.redirectToCoronaTrackerPage, 1000);
                          
-                        
-              }
-             else{
-                alert("Username & password is invalid!");    
-                this.setState({user:user,isSubmited:isSubmited,error:currenterror,isvalidUser:false,isInvaliduser:true});
+                }
+                else{    
+                this.setState({user:localuser,isSubmited:isSubmited,error:currenterror,isvalidUser:false,isInvaliduser:true});
              }
+            });
+            
+               
                     
             
          }    
@@ -104,8 +113,8 @@ import Actions from '../../Actions/Actions';
                   </div>
                  <div>
                      <span>You don't have Account? Click <NavLink to="/Registration">Here</NavLink></span>
-                     {this.state.isvalidUser?<p>seccefuly loggin</p>:null}
-                     {this.state.isInvaliduser?<p>invalid UserID and Password!</p>:null}
+                     {this.state.isvalidUser?<p style={{color: "green"}}>seccefuly loggedin!!</p>:null}
+                     {this.state.isInvaliduser?<p>Invalid userID and password!!</p>:null}
                  </div>
                </div>
                 
@@ -117,7 +126,8 @@ import Actions from '../../Actions/Actions';
 const mapStateToprops=state=>{
     return{
         loginuser:state.user,
-        allRegisteruser:state.allRegisteruser
+        allRegisteruser:state.allRegisteruser,
+        LoggedIn:state.LoggedIn
     }
 }
 const mapDispatchToprops=dispatch=>{

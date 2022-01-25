@@ -5,7 +5,8 @@ import {NavLink} from 'react-router-dom';
 import  RegistrationPageValidation from "./RegistrationPageValidation";
 import axios from 'axios';
 import {connect} from 'react-redux';
-import Actions from '../../Actions/Actions'
+import Actions from '../../Actions/Actions';
+import UUIDGenrator from '../Utils/UUIDGenrator';
 class RegistrationForm extends Component {
     constructor(props){
         super(props);
@@ -50,7 +51,7 @@ class RegistrationForm extends Component {
         if(Object.keys(currenterror).length===0)
         {
             
-            axios.get("http://localhost:3333/users?q="+this.state.user.email).then(response=>{
+            /*axios.get("http://localhost:3333/users?q="+this.state.user.email).then(response=>{
                
                if(response.data.length>0)
                {
@@ -79,6 +80,19 @@ class RegistrationForm extends Component {
               
                
            })
+           */
+           axios.post("/v1/cta/create/user/"+UUIDGenrator(),{"userID":UUIDGenrator,"userName":this.state.user.username,"emailId":this.state.user.email,"password":this.state.user.password}).then(response=>{
+                    
+            if(response.status===200)
+            {
+             var {localuser,isSubmited,error,isvalidUser}={...this.state};   
+             
+             this.setState({user:this.state.user,isSubmited:true,error:error,isvalidUser:false});
+             this.props.newRegisteruser();
+             alert("you have been Registered seccefully !"); 
+               
+            }
+        })   
         }    
         
     };

@@ -1,6 +1,6 @@
 import {LOGGEDIN,LOGOUT,SETUSER} from '../Types/Constant'
 const initialState={
-    user:{},
+    user:false,
     allRegisteruser:[],
     LoggedIn:false
 }
